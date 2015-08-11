@@ -1,14 +1,16 @@
 package com.codepath.apps.MySimpleTweets;
 
-import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.builder.api.TwitterApi;
-
 import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.scribe.builder.api.Api;
+import org.scribe.builder.api.TwitterApi;
+import org.scribe.exceptions.OAuthException;
+
+import java.io.UnsupportedEncodingException;
 
 /*
  * 
@@ -29,18 +31,58 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final String REST_CONSUMER_SECRET = "veBTHiXca94jnDyxsN15IEnoaNIuCzUonUPcdhp8EqvcsnJ5To"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://g7190305_CPTwitterApp"; // Change this (here and in manifest)
 
+	private static final int COUNT = 10;
+
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
 	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
-	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-		// Can specify query string params directly or through RequestParams.
+
+	public void getHomeTimeline(long id, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+
 		RequestParams params = new RequestParams();
-		params.put("format", "json");
-		client.get(apiUrl, params, handler);
+		params.put("count",COUNT);
+
+		if (id > 1) {
+			params.put("max_id", id);
+		} else {
+			params.put("since_id", 1);
+		}
+
+		try {
+			getClient().get(apiUrl, params, handler);
+		} catch (OAuthException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void getVerifyCredentials( AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+
+		RequestParams params = new RequestParams();
+
+		try {
+			getClient().get(apiUrl, params, handler);
+		} catch (OAuthException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateStatuses( String status, AsyncHttpResponseHandler handler) throws UnsupportedEncodingException {
+		String apiUrl = getApiUrl("statuses/update.json");
+
+		RequestParams params = new RequestParams();
+		// params.put("status", URLEncoder.encode(status, "UTF-8") ); //  the asyncHttpClient will do encoding for you
+		params.put("status", status );
+
+		try {
+			getClient().post(apiUrl, params, handler);
+		} catch (OAuthException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

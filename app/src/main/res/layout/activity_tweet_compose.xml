@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codepath.apps.MySimpleTweets.TweetComposeActivity">
+
+    <include layout="@layout/compoe_head"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/include" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivProfileImage"
+        android:layout_below="@+id/include"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvScreenName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="51dp"
+        android:layout_marginEnd="51dp"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_alignBottom="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:gravity="center_vertical" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etMessage"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:enabled="true"
+        android:editable="true"
+        android:focusable="true"
+        android:maxLines="3"
+        android:minLines="3"
+        android:layout_margin="10dp" />
+
+
+</RelativeLayout>
