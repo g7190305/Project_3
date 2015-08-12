@@ -47,5 +47,26 @@
         android:minLines="3"
         android:layout_margin="10dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="max 140 characters, remaining:   "
+        android:id="@+id/tvCountTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/etMessage"
+        android:layout_toLeftOf="@+id/tvCharCount"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="140"
+        android:id="@+id/tvCharCount"
+        android:layout_below="@+id/etMessage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignRight="@+id/etMessage"
+        android:layout_marginRight="10dp" />
+
 
 </RelativeLayout>

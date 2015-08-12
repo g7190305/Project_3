@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +29,9 @@ public class TweetComposeActivity extends ActionBarActivity {
     private TextView tvScreenName;
     private ImageView ivProfileImage;
     private TextView etMessage;
+    private TextView tvCharCount;
+    private TextView tvCountTitle;
+
 
 
     @Override
@@ -37,7 +42,36 @@ public class TweetComposeActivity extends ActionBarActivity {
         tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         etMessage = (TextView) findViewById(R.id.etMessage);
+        tvCharCount = (TextView) findViewById(R.id.tvCharCount);
+        tvCountTitle = (TextView) findViewById(R.id.tvCountTitle);
         user = new User();
+
+        etMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                return;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                return;
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = etMessage.getText().toString();
+                int counter = text.length();
+                int remain = 140 - counter;
+
+                if ( remain > 0) {
+                    tvCharCount.setText(String.valueOf(remain));
+                    tvCharCount.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
+                } else {
+                    tvCharCount.setText(String.valueOf(remain));
+                    tvCharCount.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                }
+            }
+        });
 
         getProfile(this);
     }
